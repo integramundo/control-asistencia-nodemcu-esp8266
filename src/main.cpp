@@ -26,7 +26,7 @@ public:
   }
 };
 
-/* const int D0 = 16; // GPIO16 - WAKE UP //buzzer
+/* const int D0 = 16; // GPIO16 - WAKE UP
 const int D1 = 5;  // GPIO5
 const int D2 = 4;  // GPIO4
 const int D3 = 0;  // GPIO0
@@ -94,9 +94,10 @@ String modo = "check-out";
 
 String url = "https://flask-asistencia-odoo.onrender.com/hello/paula";
 
+// importante almacenar los usuarios como url enconded string
 Usuario usuarios[] = {
-    Usuario("paula", "F3073CF6"),
-    Usuario("juan", "766BD999")};
+    Usuario("Alejandra+Paillas", "F3073CF6"),
+    Usuario("Cristopher+Ferrada", "768C6486")};
 int numUsuarios = sizeof(usuarios) / sizeof(usuarios[0]); // Calculate number of users
 
 void parpadearLed(int pin, int ms)
@@ -125,9 +126,11 @@ void imprimirUsuarios(Usuario usuarios[], int size)
   }
 }
 
-void registrarUsuario()
+void registrarUsuario(const char *nombre)
 {
-  Serial.println("USUARIO PUEDE INGRESAR");
+  String nombreUsuario = nombre;
+  Serial.print("Autenticando a ");
+  Serial.println(nombreUsuario);
 
   WiFiClientSecure client;
 
@@ -142,11 +145,11 @@ void registrarUsuario()
 
     if (modo == "check-in")
     {
-      url = "https://flask-asistencia-odoo.onrender.com/hello/check-in";
+      url = "https://flask-asistencia-odoo.onrender.com/post_attendance?file_path=credentials.txt&action=check-in&username=" + nombreUsuario;
     }
     else
     {
-      url = "https://flask-asistencia-odoo.onrender.com/hello/check-out";
+      url = "https://flask-asistencia-odoo.onrender.com/post_attendance?file_path=credentials.txt&action=check-out&username=" + nombreUsuario;
     }
 
     if (https.begin(client, url))
@@ -193,7 +196,8 @@ void comprobarClave(String clave, Usuario usuarios[], int size)
   {
     if (strcmp(claveChar, usuarios[i].obtenerClave()) == 0)
     {
-      registrarUsuario();
+      // pasamos el nombre de usuario a la funcion que luego lo agregara como query param
+      registrarUsuario(usuarios[i].obtenerNombre());
       return;
     }
   }
@@ -350,34 +354,19 @@ void loop()
     return;
   }
 
-  if (rfid.uid.uidByte[0] != nuidPICC[0] ||
-      rfid.uid.uidByte[1] != nuidPICC[1] ||
-      rfid.uid.uidByte[2] != nuidPICC[2] ||
-      rfid.uid.uidByte[3] != nuidPICC[3])
-  {
-    Serial.println("Se ha detectado una nueva tarjeta.");
+  Serial.println("Se ha detectado una nueva tarjeta.");
 
-    pulsarBuzzer(BUZZER, 150);
+  pulsarBuzzer(BUZZER, 150);
 
-    // Store NUID into nuidPICC array
-    for (byte i = 0; i < 4; i++)
-    {
-      nuidPICC[i] = rfid.uid.uidByte[i];
-    }
+  DatoHex = printHex(rfid.uid.uidByte, rfid.uid.size);
+  Serial.print("Codigo Tarjeta: ");
+  Serial.println(DatoHex);
 
-    DatoHex = printHex(rfid.uid.uidByte, rfid.uid.size);
-    Serial.print("Codigo Tarjeta: ");
-    Serial.println(DatoHex);
+  // verificar si existe esta clave entre nuestros usuarios registrados
+  comprobarClave(DatoHex, usuarios, numUsuarios);
 
-    // verificar si existe esta clave entre nuestros usuarios registrados
-    comprobarClave(DatoHex, usuarios, numUsuarios);
+  Serial.println();
 
-    Serial.println();
-  }
-  else
-  {
-    Serial.println("Tarjeta leida previamente");
-  }
   // Halt PICC
   rfid.PICC_HaltA();
   // Stop encryption on PCD
