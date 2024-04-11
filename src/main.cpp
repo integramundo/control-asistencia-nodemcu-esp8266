@@ -40,8 +40,8 @@ const int TX = 1;  // GPIO1 - TXD0
 const int S3 = 10;
 const int S2 = 9; */
 
-const int SS_PIN = D8;
-const int RST_PIN = D0;
+const int SS_PIN = D8;  // SDA RC522
+const int RST_PIN = D0; // RST RC522
 const int BUZZER = D1;
 const int BOTON = D2;
 const int LED_VERDE = D3;
@@ -87,12 +87,14 @@ R9I4LtD+gdwyah617jzV/OeBHRnDJELqYzmp
 )CERT";
 X509List cert(IRG_Root_X1);
 
-const char *ssid = "Integramundo";
-const char *password = "integramundo2023";
+/* const char *ssid = "Integramundo";
+const char *password = "integramundo2023"; */
+const char *ssid = "aledroid";
+const char *password = "jajalolxd";
 
 String modo = "check-out";
 
-String url = "https://flask-asistencia-odoo.onrender.com/hello/paula";
+String url = "https://flask-asistencia-odoo.onrender.com/hello/ale";
 
 // importante almacenar los usuarios como url enconded string
 Usuario usuarios[] = {
@@ -136,7 +138,6 @@ void registrarUsuario(const char *nombre)
 
   if ((WiFi.status() == WL_CONNECTED))
   {
-
     client.setTrustAnchors(&cert);
 
     HTTPClient https;
@@ -153,8 +154,7 @@ void registrarUsuario(const char *nombre)
     }
 
     if (https.begin(client, url))
-    { // HTTPS
-
+    {
       Serial.print("[HTTPS] GET...\n");
       int httpCode = https.GET();
 
@@ -166,6 +166,13 @@ void registrarUsuario(const char *nombre)
         {
           String payload = https.getString();
           Serial.println(payload);
+          pulsarBuzzer(BUZZER, 150);
+          pulsarBuzzer(BUZZER, 150);
+        }
+        else if (httpCode == HTTP_CODE_NOT_FOUND)
+        {
+          Serial.println("Usuario no existe en la base de datos.");
+          pulsarBuzzer(BUZZER, 150);
           pulsarBuzzer(BUZZER, 150);
           pulsarBuzzer(BUZZER, 150);
         }
@@ -242,7 +249,7 @@ String printHex(byte *buffer, byte bufferSize)
     }
   }
 
-  for (int i = 0; i < DatoHexAux.length(); i++)
+  for (unsigned int i = 0; i < DatoHexAux.length(); i++)
   {
     DatoHexAux[i] = toupper(DatoHexAux[i]);
   }
