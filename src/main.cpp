@@ -87,10 +87,8 @@ R9I4LtD+gdwyah617jzV/OeBHRnDJELqYzmp
 )CERT";
 X509List cert(IRG_Root_X1);
 
-/* const char *ssid = "Integramundo";
-const char *password = "integramundo2023"; */
-const char *ssid = "aledroid";
-const char *password = "jajalolxd";
+const char *ssid = "Integramundo";
+const char *password = "integramundo2023";
 
 String modo = "check-out";
 
@@ -195,6 +193,13 @@ void registrarUsuario(const char *nombre)
           pulsarBuzzer(BUZZER, 150);
           pulsarBuzzer(BUZZER, 150);
           pulsarBuzzer(BUZZER, 150);
+        }
+        else if (httpCode == HTTP_CODE_BAD_REQUEST)
+        {
+          Serial.println("Usuario ya registró su ingreso.");
+          pulsarBuzzer(BUZZER, 300);
+          pulsarBuzzer(BUZZER, 300);
+          pulsarBuzzer(BUZZER, 300);
         }
       }
       else
