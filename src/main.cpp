@@ -98,8 +98,28 @@ String url = "https://flask-asistencia-odoo.onrender.com/hello/ale";
 
 // importante almacenar los usuarios como url enconded string
 Usuario usuarios[] = {
-    Usuario("Alejandra+Paillas", "F3073CF6"),
-    Usuario("Cristopher+Ferrada", "768C6486")};
+    Usuario("Master+Key", "D3649A0D"),
+    Usuario("Master+Card", "F3073CF6"),
+    Usuario("User+1", "8493398F"),
+    Usuario("User+2", "44130E8F"),
+    Usuario("User+3", "742E2A8F"),
+    Usuario("User+4", "142CEB8E"),
+    Usuario("User+5", "A4B68D8F"),
+    Usuario("User+6", "A4F2948F"),
+    Usuario("User+7", "A4BFA98F"),
+    Usuario("User+8", "54DF9A8F"),
+    Usuario("User+9", "54A3648F"),
+    Usuario("User+10", "B450438F"),
+    Usuario("User+11", "7460DC8F"),
+    Usuario("User+12", "A468798F"),
+    Usuario("User+13", "44BC2E8F"),
+    Usuario("User+14", "8477858F"),
+    Usuario("User+15", "D6B06172"),
+    Usuario("User+16", "9497928F"),
+    Usuario("User+17", "7481648F"),
+    Usuario("User+18", "74988C8F"),
+    Usuario("User+19", "94350B8F"),
+    Usuario("User+20", "17DA3F5F")};
 int numUsuarios = sizeof(usuarios) / sizeof(usuarios[0]); // Calculate number of users
 
 void parpadearLed(int pin, int ms)
