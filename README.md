@@ -3,7 +3,7 @@
 Sistema de control de asistencia empresarial desarrollado con un
 microcontrolador nodemcu esp8266 y el módulo RFID RC522.
 
-# Compilación
+## Compilación
 
 Para compilar el proyecto es necesario configurar PlatformIO IDE:
 
@@ -11,12 +11,12 @@ https://platformio.org/
 
 La mejor opción es instalarlo como una extensión de VSCode.
 
-# Flash
+## Flash
 
 Una vez configurado el proyecto solo hace falta ejecutar los comandos
 `build` y `upload`.
 
-# Cableado
+## Cableado
 
 Puedes seguir esta guía para cablear el RC522 al nodemcu:
 
@@ -26,7 +26,7 @@ Los únicos pines que he cambiado son el SDA y el RST que estan
 configurados en el código fuente junto a un buzzer activo, un botón y
 dos leds que puedes cablear a tu gusto.
 
-# Funcionamiento
+## Funcionamiento
 
 Diseñé el sistema para conectar el nodemcu con un servidor python
 flask:
@@ -39,7 +39,7 @@ Odoo. Pero este código es independiente de la lógica que necesites
 para registrar tus asistencias. Lo importante es enviar los requests
 al backend mediante la API que implementes.
 
-# Instrucciones
+## Instrucciones
 
 !["Guía gráfica"](./guia-control-de-asistencia.png)
 
