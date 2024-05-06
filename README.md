@@ -45,18 +45,23 @@ al backend mediante la API que implementes.
 
 1. Para utilizar el control de asistencia es necesario conectar a la
 corriente el módulo ilustrado con una fuente de poder de 9V 1A.
+
 2. Enseguida presione el botón de encendido de modo que la posición
 indicada por el símbolo “|” este hacia abajo (“O” indica circuito
-abierto y “|” flujo de corriente).  3. Las luces parpadearán por unos
-momentos. Espere hasta que se encienda la luz verde para utilizar el
-control de asistencia.  4. El dispositivo cuenta con 2 modos de
-operación indicados por una luz verde y una luz roja. La luz verde
-indica que el módulo está en modo “ingreso”. La luz roja indica que el
+abierto y “|” flujo de corriente).
+
+3. Las luces parpadearán por unos momentos. Espere hasta que se encienda la luz verde para utilizar el
+control de asistencia.
+
+4. El dispositivo cuenta con 2 modos de operación indicados por una luz verde y una luz roja.
+La luz verde indica que el módulo está en modo “ingreso”. La luz roja indica que el
 módulo está en modo “salida”. Para cambiar de modo de operación
-presione el botón circular negro ubicado junto a las luces.  5. Una
-vez elegido si quiere registrar su entrada o salida, acerque su
-tarjeta al sensor ubicado en la parte superior del módulo.  6. Puede
-corroborar que su registro ha sido exitoso porque el módulo emitirá 1
+presione el botón circular negro ubicado junto a las luces.
+
+5. Una vez elegido si quiere registrar su entrada o salida, acerque su
+tarjeta al sensor ubicado en la parte superior del módulo.
+
+6. Puede corroborar que su registro ha sido exitoso porque el módulo emitirá 1
 pitido al momento de acercar su tarjeta y luego de unos segundos
 emitirá 2 pitidos seguidos. Si no se ha podido registrar su asistencia
 se emitirán 3 pitidos seguidos.
