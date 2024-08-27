@@ -4,6 +4,7 @@
 #include <MFRC522.h>
 #include <SPI.h>
 #include <WiFiClientSecure.h>
+#include <ArduinoJson.h> // Include ArduinoJson library
 
 class Usuario
 {
@@ -64,60 +65,42 @@ String DatoHex;
 // certificado raíz de onrender.com
 const char IRG_Root_X1[] PROGMEM = R"CERT(
 -----BEGIN CERTIFICATE-----
-MIIDdzCCAl+gAwIBAgIEAgAAuTANBgkqhkiG9w0BAQUFADBaMQswCQYDVQQGEwJJ
-RTESMBAGA1UEChMJQmFsdGltb3JlMRMwEQYDVQQLEwpDeWJlclRydXN0MSIwIAYD
-VQQDExlCYWx0aW1vcmUgQ3liZXJUcnVzdCBSb290MB4XDTAwMDUxMjE4NDYwMFoX
-DTI1MDUxMjIzNTkwMFowWjELMAkGA1UEBhMCSUUxEjAQBgNVBAoTCUJhbHRpbW9y
-ZTETMBEGA1UECxMKQ3liZXJUcnVzdDEiMCAGA1UEAxMZQmFsdGltb3JlIEN5YmVy
-VHJ1c3QgUm9vdDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKMEuyKr
-mD1X6CZymrV51Cni4eiVgLGw41uOKymaZN+hXe2wCQVt2yguzmKiYv60iNoS6zjr
-IZ3AQSsBUnuId9Mcj8e6uYi1agnnc+gRQKfRzMpijS3ljwumUNKoUMMo6vWrJYeK
-mpYcqWe4PwzV9/lSEy/CG9VwcPCPwBLKBsua4dnKM3p31vjsufFoREJIE9LAwqSu
-XmD+tqYF/LTdB1kC1FkYmGP1pWPgkAx9XbIGevOF6uvUA65ehD5f/xXtabz5OTZy
-dc93Uk3zyZAsuT3lySNTPx8kmCFcB5kpvcY67Oduhjprl3RjM71oGDHweI12v/ye
-jl0qhqdNkNwnGjkCAwEAAaNFMEMwHQYDVR0OBBYEFOWdWTCCR1jMrPoIVDaGezq1
-BE3wMBIGA1UdEwEB/wQIMAYBAf8CAQMwDgYDVR0PAQH/BAQDAgEGMA0GCSqGSIb3
-DQEBBQUAA4IBAQCFDF2O5G9RaEIFoN27TyclhAO992T9Ldcw46QQF+vaKSm2eT92
-9hkTI7gQCvlYpNRhcL0EYWoSihfVCr3FvDB81ukMJY2GQE/szKN+OMY3EU/t3Wgx
-jkzSswF07r51XgdIGn9w/xZchMB5hbgF/X++ZRGjD8ACtPhSNzkE1akxehi/oCr0
-Epn3o0WC4zxe9Z2etciefC7IpJ5OCBRLbf1wbWsaY71k5h+3zvDyny67G7fyUIhz
-ksLi4xaNmjICq44Y3ekQEe5+NauQrz4wlHrQMz2nZQ/1/I6eYs9HRCwBXbsdtTLS
-R9I4LtD+gdwyah617jzV/OeBHRnDJELqYzmp
+
 -----END CERTIFICATE-----
 )CERT";
 X509List cert(IRG_Root_X1);
 
-const char *ssid = "Integramundo";
-const char *password = "integramundo2023";
+const char *ssid = "";
+const char *password = "";
 
 String modo = "check-out";
 
-String url = "https://flask-asistencia-odoo.onrender.com/hello/ale";
+String url = "https://flask-asistencia-odoo-integramundo.onrender.com/hello/integramundo";
 
 // importante almacenar los usuarios como url enconded string
 Usuario usuarios[] = {
-    Usuario("Master+Key", "D3649A0D"),
-    Usuario("Master+Card", "F3073CF6"),
-    Usuario("User+1", "8493398F"),
-    Usuario("User+2", "44130E8F"),
-    Usuario("User+3", "742E2A8F"),
-    Usuario("User+4", "142CEB8E"),
-    Usuario("User+5", "A4B68D8F"),
-    Usuario("User+6", "A4F2948F"),
-    Usuario("User+7", "A4BFA98F"),
-    Usuario("User+8", "54DF9A8F"),
-    Usuario("User+9", "54A3648F"),
-    Usuario("User+10", "B450438F"),
-    Usuario("User+11", "7460DC8F"),
-    Usuario("User+12", "A468798F"),
-    Usuario("User+13", "44BC2E8F"),
-    Usuario("User+14", "8477858F"),
-    Usuario("User+15", "D6B06172"),
-    Usuario("User+16", "9497928F"),
-    Usuario("User+17", "7481648F"),
-    Usuario("User+18", "74988C8F"),
-    Usuario("User+19", "94350B8F"),
-    Usuario("User+20", "17DA3F5F")};
+    Usuario("Master Key", "D3649A0D"),
+    Usuario("Master Card", "F3073CF6"),
+    Usuario("User 1", "8493398F"),
+    Usuario("User 2", "44130E8F"),
+    Usuario("User 3", "742E2A8F"),
+    Usuario("User 4", "142CEB8E"),
+    Usuario("User 5", "A4B68D8F"),
+    Usuario("User 6", "A4F2948F"),
+    Usuario("User 7", "A4BFA98F"),
+    Usuario("User 8", "54DF9A8F"),
+    Usuario("User 9", "54A3648F"),
+    Usuario("User 10", "B450438F"),
+    Usuario("User 11", "7460DC8F"),
+    Usuario("User 12", "A468798F"),
+    Usuario("User 13", "44BC2E8F"),
+    Usuario("User 14", "8477858F"),
+    Usuario("User 15", "D6B06172"),
+    Usuario("User 16", "9497928F"),
+    Usuario("User 17", "7481648F"),
+    Usuario("User 18", "74988C8F"),
+    Usuario("User 19", "94350B8F"),
+    Usuario("User 20", "17DA3F5F")};
 int numUsuarios = sizeof(usuarios) / sizeof(usuarios[0]); // Calculate number of users
 
 void parpadearLed(int pin, int ms)
@@ -130,7 +113,7 @@ void parpadearLed(int pin, int ms)
 
 void pulsarBuzzer(int buzzer, int ms)
 {
-  // LOW PRENDER HIGH APAGA
+  // LOW PRENDE HIGH APAGA
   digitalWrite(buzzer, LOW);
   delay(ms);
   digitalWrite(buzzer, HIGH);
@@ -154,36 +137,41 @@ void registrarUsuario(const char *nombre)
 
   WiFiClientSecure client;
 
-  if ((WiFi.status() == WL_CONNECTED))
+  if (WiFi.status() == WL_CONNECTED)
   {
-    client.setTrustAnchors(&cert);
+    client.setTrustAnchors(&cert); // Ensure you have the root certificate set up properly
 
     HTTPClient https;
 
     Serial.print("[HTTPS] begin...\n");
 
-    if (modo == "check-in")
-    {
-      url = "https://flask-asistencia-odoo.onrender.com/post_attendance?file_path=credentials.txt&action=check-in&username=" + nombreUsuario;
-    }
-    else
-    {
-      url = "https://flask-asistencia-odoo.onrender.com/post_attendance?file_path=credentials.txt&action=check-out&username=" + nombreUsuario;
-    }
+    String url = "https://flask-asistencia-odoo-integramundo.onrender.com/post_attendance";
 
+    // Prepare JSON data
+    JsonDocument doc;
+    doc["file_path"] = "credentials.txt";
+    doc["action"] = (modo == "check-in") ? "check-in" : "check-out";
+    doc["username"] = nombreUsuario;
+
+    // Serialize JSON object
+    String jsonBuffer;
+    serializeJson(doc, jsonBuffer);
+
+    Serial.print("[HTTPS] POST...\n");
     if (https.begin(client, url))
-    {
-      Serial.print("[HTTPS] GET...\n");
-      int httpCode = https.GET();
+    {                                                      // Initialize HTTPClient with the server URL
+      https.addHeader("Content-Type", "application/json"); // Add the content type header
+
+      int httpCode = https.POST(jsonBuffer); // Send the request with the JSON payload
 
       if (httpCode > 0)
       {
-        Serial.printf("[HTTPS] GET... code: %d\n", httpCode);
-        if (httpCode == HTTP_CODE_OK ||
-            httpCode == HTTP_CODE_MOVED_PERMANENTLY)
+        Serial.printf("[HTTPS] POST... code: %d\n", httpCode);
+        String payload = https.getString();
+        Serial.println(payload);
+
+        if (httpCode == HTTP_CODE_OK)
         {
-          String payload = https.getString();
-          Serial.println(payload);
           pulsarBuzzer(BUZZER, 150);
           pulsarBuzzer(BUZZER, 150);
         }
@@ -204,19 +192,21 @@ void registrarUsuario(const char *nombre)
       }
       else
       {
-        Serial.printf("[HTTPS] GET... failed, error: %s\n",
-                      https.errorToString(httpCode).c_str());
+        Serial.printf("[HTTPS] POST... failed, error: %s\n", https.errorToString(httpCode).c_str());
         pulsarBuzzer(BUZZER, 150);
         pulsarBuzzer(BUZZER, 150);
         pulsarBuzzer(BUZZER, 150);
       }
-
-      https.end();
+      https.end(); // Close the connection
     }
     else
     {
-      Serial.printf("[HTTPS] Unable to connect\n");
+      Serial.println("[HTTPS] Unable to begin connection");
     }
+  }
+  else
+  {
+    Serial.printf("[HTTPS] Unable to connect\n");
   }
 }
 
